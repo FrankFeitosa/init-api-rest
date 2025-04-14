@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Introdução a API REST",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/FrankFeitosa/init-api-rest/issues"
   },
-  "homepage": "https://github.com/FrankFeitosa/init-api-rest#readme"
+  "homepage": "https://github.com/FrankFeitosa/init-api-rest#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
