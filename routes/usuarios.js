@@ -55,7 +55,7 @@ router.delete("/usuario/:id", (req, res) => {
     }
 
     usuarios.splice(index, 1)
-    res.send(usuarios)
+    res.status(200).json(usuarios)
 })
 
 export default router;
