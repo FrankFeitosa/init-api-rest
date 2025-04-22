@@ -28,7 +28,8 @@ router.put("/atualiza/:id", (req,res) => {
     const indice = produtos.findIndex( produto => produto.id === parseInt(id));
     if(indice === -1){
       return res.status(404).json("Produto não encontrado")
-    };
+    }
+    
     produtos[indice].nome = novoNome;
     produtos[indice].preco = novoPreco;
 
@@ -40,6 +41,8 @@ router.delete("/excluir/:id", (req, res) => {
     const index = produtos.findIndex(produto =>  produto.id == parseInt(id))
     if(index === -1){
        return res.status(404).json({message: "Fornecedor não encontrado!"})
+    }else {
+        res.status(200).json({message: "Deletado com Sucesso!"})
     }
 
     produtos.splice(index, 1)
