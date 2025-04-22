@@ -10,11 +10,21 @@ const usuarios = [
     { id: 2, nome: "Ana", email: "ana@emaill.com" }
 ]
 // mostra o que tem no servidor
+// app.get("/usuarios", (req, res) => {
+//     res.send(`
+//         Estes são todos os usuários cadastrados: 
+//          ${JSON.stringify(usuarios)}
+//         `)
+// });
+
+//Outra maneira de retornar um pedido no servidor
+// app.get("/usuarios", (req, res) => {
+//     res.json(usuarios)
+// });
+
+//Outra maneira
 app.get("/usuarios", (req, res) => {
-    res.send(`
-        Estes são todos os usuários cadastrados: 
-         ${JSON.stringify(usuarios)}
-        `)
+    res.status(200).json(usuarios)
 });
 
 //Criar novo usuário
@@ -25,18 +35,24 @@ app.post("/criarUsuario", (req, res) => {
         nome: nome,
         email: email
     })
-    res.send(usuarios)
+    // res.send(usuarios)
+    res.status(201).json(usuarios)
 });
 
 // Atualiza os dados do usuario no servidor fake
 app.put("/usuario/:id", (req, res) => {
     const { id } = req.params
     const { novoNome, novoEmail } = req.body
-    const usuario = usuarios.find(
+    const indice = usuarios.findIndex(
         usuario => usuario.id === parseInt(id)
     )
-    usuario.nome = novoNome;
-    usuario.email = novoEmail;
+
+    if(indice === -1){
+        res.status(404).json("Usuário não encontrado!")
+    }
+
+    indice.nome = novoNome;
+    indice.email = novoEmail;
 
     res.send(usuario)
 
@@ -45,10 +61,12 @@ app.put("/usuario/:id", (req, res) => {
 // deleta usuario
 app.delete("/usuario/:id", (req, res) => {
     const { id } = req.params
-    const index = usuarios.findIndex((usuario) => {return usuario.id == id})
+    const index = usuarios.findIndex((usuario) => {return usuario.id == parseInt(id)})
     if(index === -1){
-        res.send("Usuário não encontrado")
+        // res.send("Usuário não encontrado")
+       return res.status(404).json({message: "Usuário não encontrado!"})
     }
+
     usuarios.splice(index, 1)
     res.send(usuarios)
 })
