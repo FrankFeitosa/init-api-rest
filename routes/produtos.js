@@ -12,6 +12,13 @@ router.get("/", (req,res) => {
     res.status(200).json(produtos)
 })
 
+router.get("/:id", (req,res) => {
+    const  id  = req.params.id
+    const indice = produtos.findIndex((produto) => {
+        return produto.id == parseInt(id) })
+    res.status(200).json(produtos[indice])
+})
+
 router.post("/addProduto", (req,res) => {
     const {nome, preco} = req.body;
     produtos.push({
